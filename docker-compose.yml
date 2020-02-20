@@ -1,0 +1,49 @@
+version: '2'
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+            - "0.0.0.0:${NGINX_PORT_HTTP}:80"
+            - "0.0.0.0:${NGINX_PORT_HTTPS}:443"
+        volumes:
+            - ./configs/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./www:/var/www
+            - ./logs:/var/log/nginx
+        links:
+            - php
+    php:
+        build: ./configs/php
+        links:
+            - mysql
+        volumes:
+            - ./www:/var/www
+
+    mysql:
+        image: mysql:5.7
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+        ports:
+            - "0.0.0.0:${MYSQL_PORT}:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+            - ./configs/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            #- MYSQL_DATABASE=${DB_NAME}
+            #- MYSQL_USER=${DB_USER}
+            #- MYSQL_PASSWORD=${DB_PASSWORD}
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        depends_on:
+            - mysql
+        ports:
+            - "0.0.0.0:${PHPMYADMIN_PORT_HTTP}:80"
+        environment:
+            PMA_HOST: mysql
+            #PMA_ARBITRARY: 1
+            #PMA_PORT: 3306
+
+    maildev:
+        image: djfarrelly/maildev
+        ports:
+            - "0.0.0.0:${MAILDEV_PORT}:80"

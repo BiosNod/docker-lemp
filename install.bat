@@ -1,0 +1,1 @@
+explorer https://hub.docker.com/editions/community/docker-ce-desktop-windows
