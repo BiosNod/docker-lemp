@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends unzip libssl-de
     && rm -rf /tmp/pecl-memcache-php7 php7.zip
 
 CMD ["php-fpm"]
-CMD ["service memcached start"]
+#CMD ["service memcached start"]
 
 #COPY ./src/composer.json /var/www
 #VOLUME ["/var/www"]
