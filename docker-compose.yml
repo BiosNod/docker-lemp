@@ -1,5 +1,12 @@
 version: '2'
 services:
+    # Этот контейнер умирает (код 0) после старта и подтягивания зависимостей (появится папка vendor)
+    composer:
+        build: ./configs/composer
+        volumes:
+            - ./www:/app
+        working_dir: /app
+
     nginx:
         image: nginx:latest
         ports:
