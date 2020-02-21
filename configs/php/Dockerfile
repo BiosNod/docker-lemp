@@ -93,8 +93,3 @@ RUN apt-get install -y --no-install-recommends unzip libssl-dev libpcre3 libpcre
     && rm -rf /tmp/pecl-memcache-php7 php7.zip
 
 CMD ["php-fpm"]
-
-#COPY ./src/composer.json /var/www
-#VOLUME ["/var/www"]
-#WORKDIR /var/www
-#RUN cd /var/www && mkdir tests && mkdir database && composer install --prefer-source --no-interaction
