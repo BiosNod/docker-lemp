@@ -15,6 +15,7 @@ services:
         build: ./configs/php
         links:
             - mysql
+            - memcached
         volumes:
             - ./www:/var/www
 
@@ -47,3 +48,9 @@ services:
         image: djfarrelly/maildev
         ports:
             - "0.0.0.0:${MAILDEV_PORT}:80"
+
+    memcached:
+        build: ./configs/memcached
+        ports:
+            - "${MEMCACHED_PORT}:11211"
+        restart: always

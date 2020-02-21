@@ -38,9 +38,9 @@ RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xd
     # Как показала практика idekey как будто бы ни на что не влияет, подключения всё равно происходят если использовать слушатель в PHPSTORM
     echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
     # В случае 1 ip компа с PHPSTORM будет определяться автоматически
-    echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
     # Работает только если remote_connect_back равен 0, подключение будет строго к этому ip
-    #RUN echo "xdebug.remote_host=172.16.10.243" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    echo "xdebug.remote_host=192.168.0.2" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
 # Bcgen
@@ -80,7 +80,7 @@ RUN apt-get install -y \
     && echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
 
 # Memcache
-RUN apt-get update && apt-get install -y --no-install-recommends unzip libssl-dev libpcre3 libpcre3-dev \
+RUN apt-get install -y --no-install-recommends unzip libssl-dev libpcre3 libpcre3-dev \
     && cd /tmp \
     && curl -sSL -o php7.zip https://github.com/websupport-sk/pecl-memcache/archive/php7.zip \
     && unzip php7 \
@@ -93,7 +93,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends unzip libssl-de
     && rm -rf /tmp/pecl-memcache-php7 php7.zip
 
 CMD ["php-fpm"]
-#CMD ["service memcached start"]
 
 #COPY ./src/composer.json /var/www
 #VOLUME ["/var/www"]
