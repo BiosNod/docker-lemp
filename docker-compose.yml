@@ -7,6 +7,13 @@ services:
             - ./www:/app
         working_dir: /app
 
+    # Этот контейнер умирает (код 0) после старта и подтягивания зависимостей (появится папка node_modules)
+    node:
+        build: ./configs/node
+        volumes:
+            - ./www:/app
+        working_dir: /app
+
     nginx:
         image: nginx:latest
         ports:
@@ -25,6 +32,11 @@ services:
             - memcached
         volumes:
             - ./www:/var/www
+        # чтобы работал mount и другие действия повышенного уровня (опасно)
+        #cap_add:
+            #- ALL
+        # чтобы работал mount и другие действия повышенного уровня (опасно)
+        #privileged: true
 
     mysql:
         image: mysql:5.7

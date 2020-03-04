@@ -17,6 +17,10 @@ RUN apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ADD ./php.ini /usr/local/etc/php/conf.d/40-custom.ini
 
+# Чтобы работало SMB монтирование
+# пример: mount -t  cifs -o username=***,password=***,file_mode=0777,dir_mode=0777,vers=1.0,_netdev \\\\192.168.0.51\\ShareName ./FolderName
+#RUN apt-get install -y cifs-utils
+
 # Install necessary locales
 RUN apt-get install -y locales \
     && echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen \
