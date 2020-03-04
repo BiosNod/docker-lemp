@@ -73,3 +73,8 @@ services:
         ports:
             - "${MEMCACHED_PORT}:11211"
         restart: always
+
+    cron:
+        build: ./configs/cron
+        volumes:
+            - ./www:/var/www

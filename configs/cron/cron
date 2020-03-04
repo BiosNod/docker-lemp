@@ -1,0 +1,2 @@
+# example (write date file every minute):
+# * * * * * root touch /var/log/`date +%s`
